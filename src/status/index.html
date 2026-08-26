@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--#head title="Status — ModelAxis" desc="Live routing status, provider uptime over 90 days, and incident history for the ModelAxis platform." path="status/" -->
+</head>
+<body>
+<!--#nav active="status" -->
+
+<main id="main">
+  <div class="wrap">
+    <div class="page-head">
+      <div class="eyebrow">Status</div>
+      <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap">
+        <h1>All systems normal</h1>
+        <span class="badge badge-online" style="margin-top:6px"><span class="dot"></span>Routing operational</span>
+      </div>
+      <p class="lede">The axis routes around provider incidents automatically — a provider being degraded here does not mean your requests failed, only that they were served elsewhere.</p>
+    </div>
+
+    <div class="section-tight" style="padding-top:24px">
+      <dl class="kv" style="grid-template-columns:repeat(4,1fr)">
+        <div><dt>Routing uptime · 90d</dt><dd style="color:var(--aurora-deep)">99.994%</dd></div>
+        <div><dt>Median failover</dt><dd>184ms</dd></div>
+        <div><dt>Active endpoints</dt><dd>1,209</dd></div>
+        <div><dt>Open incidents</dt><dd style="color:var(--aurora-deep)">0</dd></div>
+      </dl>
+
+      <div style="margin-top:40px">
+        <div class="eyebrow">Provider health · last 90 days</div>
+        <div class="axis-rule"></div>
+        <div class="card" id="uptime-list"></div>
+        <div style="display:flex; gap:22px; margin-top:12px; font-size:12px; color:var(--ink-70); flex-wrap:wrap">
+          <span><span class="status-dot on" style="margin-right:6px"></span>Operational</span>
+          <span><span class="status-dot" style="background:#F0B429; margin-right:6px"></span>Degraded — traffic rerouted</span>
+          <span><span class="status-dot" style="background:var(--alert); margin-right:6px"></span>Outage — failover engaged</span>
+        </div>
+      </div>
+
+      <div style="margin-top:48px">
+        <div class="eyebrow">Incident history</div>
+        <div class="axis-rule"></div>
+        <div class="card card-pad" style="display:flex; align-items:center; gap:18px">
+          <div class="loader-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <div>
+            <b style="font-weight:500">No platform incidents in the last 90 days.</b>
+            <p style="font-size:13px; color:var(--ink-70)">Provider-side incidents absorbed by failover are listed per provider above and never counted against the routing SLA.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!--#footer -->
+<script src="{{ROOT}}assets/js/models-data.js"></script>
+<script src="{{ROOT}}assets/js/status.js" defer></script>
+</body>
+</html>

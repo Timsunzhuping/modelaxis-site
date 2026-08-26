@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--#head title="Rankings — ModelAxis" desc="Which models the world is actually using: token share across the ModelAxis platform, updated continuously." path="rankings/" -->
+</head>
+<body>
+<!--#nav active="rankings" -->
+
+<main id="main">
+  <div class="wrap">
+    <div class="page-head">
+      <div class="eyebrow">Leaderboard</div>
+      <h1>Rankings</h1>
+      <p class="lede">Token share across the axis over the last 30 days — a live picture of which models developers actually ship with, not a benchmark.</p>
+    </div>
+
+    <div class="section-tight" style="padding-top:28px">
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px" id="rank-tabs" role="group" aria-label="Ranking category">
+        <button class="chip" aria-pressed="true" data-cat="">All models</button>
+        <button class="chip" aria-pressed="false" data-cat="reasoning">Reasoning</button>
+        <button class="chip" aria-pressed="false" data-cat="open">Open weights</button>
+        <button class="chip" aria-pressed="false" data-cat="multimodal">Multimodal</button>
+        <button class="chip" aria-pressed="false" data-cat="cheap">Budget tier</button>
+      </div>
+
+      <div class="card" id="rank-list"></div>
+
+      <div class="grid-3" style="margin-top:40px">
+        <div class="feature">
+          <div class="eyebrow" style="margin-bottom:8px">Method</div>
+          <p>Share is computed from tokens billed through ModelAxis routing, normalized within the selected category. Private and zero-retention traffic is counted in aggregate only.</p>
+        </div>
+        <div class="feature">
+          <div class="eyebrow" style="margin-bottom:8px">Reading the bars</div>
+          <p>Cobalt is the category leader; every other bar is neutral. Share shifts fast — a price cut or a new release moves the board within days.</p>
+        </div>
+        <div class="feature">
+          <div class="eyebrow" style="margin-bottom:8px">Use it live</div>
+          <p>Route to the current leader automatically with <code class="mono" style="font-size:11.5px">modelaxis/auto</code>, or pin any model on this board by its id.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!--#footer -->
+<script src="{{ROOT}}assets/js/models-data.js"></script>
+<script src="{{ROOT}}assets/js/rankings.js" defer></script>
+</body>
+</html>

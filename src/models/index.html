@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--#head title="Models — ModelAxis" desc="Browse the ModelAxis catalog: prices, context windows, and latency for 400+ models from OpenAI, Anthropic, Google, Meta, DeepSeek, Qwen, and 57 more providers." path="models/" -->
+</head>
+<body>
+<!--#nav active="models" -->
+
+<main id="main">
+  <div class="wrap">
+    <div class="page-head">
+      <div class="eyebrow">Catalog</div>
+      <h1>Models</h1>
+      <p class="lede">Every model on the axis, with live wholesale prices, context windows, and median time-to-first-token. Prices are per million tokens.</p>
+    </div>
+
+    <div class="section-tight" style="padding-top:28px">
+      <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:14px">
+        <div style="flex:2; min-width:220px">
+          <input class="input" id="q" type="search" placeholder="Filter by model, provider, or id…" aria-label="Filter models">
+        </div>
+        <select class="input" id="provider" style="flex:1; min-width:150px" aria-label="Provider">
+          <option value="">All providers</option>
+        </select>
+        <select class="input" id="sort" style="flex:1; min-width:170px" aria-label="Sort">
+          <option value="share">Sort · Most used</option>
+          <option value="price-asc">Price · low to high</option>
+          <option value="price-desc">Price · high to low</option>
+          <option value="latency">Fastest first token</option>
+          <option value="ctx">Longest context</option>
+          <option value="new">Newest</option>
+        </select>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px" id="chips" role="group" aria-label="Category filters">
+        <button class="chip" aria-pressed="true" data-cat="">All</button>
+        <button class="chip" aria-pressed="false" data-cat="reasoning">Reasoning</button>
+        <button class="chip" aria-pressed="false" data-cat="open">Open weights</button>
+        <button class="chip" aria-pressed="false" data-cat="multimodal">Multimodal</button>
+        <button class="chip" aria-pressed="false" data-cat="long">Long context ≥1M</button>
+        <button class="chip" aria-pressed="false" data-cat="cheap">Under $1/1M out</button>
+      </div>
+
+      <p class="eyebrow" style="margin-bottom:10px" id="count" aria-live="polite"></p>
+
+      <div class="card" style="overflow-x:auto">
+        <table class="table" id="model-table">
+          <thead>
+            <tr>
+              <th style="min-width:230px">Model</th>
+              <th>Provider</th>
+              <th class="num">Context</th>
+              <th class="num">Input $/1M</th>
+              <th class="num">Output $/1M</th>
+              <th class="num">TTFT</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="notice" style="margin-top:20px">
+        Showing the featured catalog. The full list of 417 models is available from
+        <code class="mono" style="font-size:12px">GET /v1/models</code> — see the <a href="{{ROOT}}docs/#api">API reference</a>.
+      </div>
+    </div>
+  </div>
+</main>
+
+<!--#footer -->
+<script src="{{ROOT}}assets/js/models-data.js"></script>
+<script src="{{ROOT}}assets/js/models-page.js" defer></script>
+</body>
+</html>

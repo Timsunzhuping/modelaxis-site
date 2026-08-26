@@ -1,0 +1,42 @@
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="top">
+  <div class="nav-inner">
+    <a class="nav-brand" href="{{ROOT}}" aria-label="ModelAxis home">
+      <svg width="20" height="20" viewBox="0 0 110 110" aria-hidden="true">
+        <rect x="23" y="22.8" width="8" height="64.4" fill="#10131C"/>
+        <rect x="40" y="12.2" width="8" height="85.7" fill="#10131C"/>
+        <rect x="57" y="0"    width="8" height="110"  fill="#3355FF"/>
+        <rect x="74" y="12.2" width="8" height="85.7" fill="#10131C"/>
+        <rect x="91" y="22.8" width="8" height="64.4" fill="#10131C"/>
+      </svg>
+      <span class="nav-wordmark">modelaxis</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="{{ROOT}}models/" data-nav="models">Models</a>
+      <a href="{{ROOT}}chat/" data-nav="chat">Chat</a>
+      <a href="{{ROOT}}rankings/" data-nav="rankings">Rankings</a>
+      <a href="{{ROOT}}docs/" data-nav="docs">Docs</a>
+      <a href="{{ROOT}}pricing/" data-nav="pricing">Pricing</a>
+      <a href="{{ROOT}}status/" data-nav="status">Status</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="nav-search" type="button" data-search-trigger aria-label="Search models">
+        <span>Search models…</span><kbd>⌘K</kbd>
+      </button>
+      <a class="btn btn-primary nav-cta" href="{{ROOT}}docs/#quickstart">Get API key</a>
+      <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" data-burger>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile" hidden data-mobile-menu>
+    <a href="{{ROOT}}models/">Models</a>
+    <a href="{{ROOT}}chat/">Chat</a>
+    <a href="{{ROOT}}rankings/">Rankings</a>
+    <a href="{{ROOT}}docs/">Docs</a>
+    <a href="{{ROOT}}pricing/">Pricing</a>
+    <a href="{{ROOT}}status/">Status</a>
+    <a class="btn btn-primary" href="{{ROOT}}docs/#quickstart">Get API key</a>
+  </div>
+</header>
+<script>document.currentScript.previousElementSibling.dataset.active="{{active|}}";</script>

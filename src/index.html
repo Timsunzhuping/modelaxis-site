@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--#head title="ModelAxis — One axis for global intelligence" desc="400+ AI models from 60+ providers behind one OpenAI-compatible API. Wholesale token prices, intelligent routing, automatic failover. The global model exchange." path="" -->
+</head>
+<body>
+<!--#nav active="" -->
+
+<main id="main">
+
+  <!-- ============ hero ============ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <a class="badge badge-online" href="{{ROOT}}status/"><span class="dot"></span>All systems normal</a>
+        <h1>One axis.<br>All of global <em>intelligence</em>.</h1>
+        <p class="hero-sub">ModelAxis routes one OpenAI-compatible API across 400+ models from 60+ providers — at wholesale token prices, with intelligent routing and automatic failover built in.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary btn-lg" href="{{ROOT}}docs/#quickstart">Get API key</a>
+          <a class="btn btn-secondary btn-lg" href="{{ROOT}}models/">Browse models</a>
+        </div>
+        <p class="hero-note">FREE CREDITS TO START · NO CARD REQUIRED · DROP-IN FOR THE OPENAI SDK</p>
+      </div>
+
+      <div class="board" aria-label="Live model board">
+        <div class="card-head">
+          <h3>Model exchange</h3>
+          <span class="badge badge-online"><span class="dot"></span>Live routing</span>
+        </div>
+        <div class="board-rows" id="board-rows">
+          <div class="board-row board-head-row"><span>Model</span><span class="num">TTFT</span><span class="num">$/1M in</span><span class="num">$/1M out</span></div>
+        </div>
+        <div class="board-chart">
+          <div class="bars bars-anim" id="board-bars" aria-hidden="true"></div>
+          <div class="board-caption"><span>TOKENS ROUTED · 24H</span><span id="board-count">2.41B</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ stats ============ -->
+  <section class="stats">
+    <div class="wrap stats-grid">
+      <div class="stat"><b><span data-count="2.4">0</span>T</b><span>Tokens routed / month</span></div>
+      <div class="stat"><b><span data-count="417">0</span></b><span>Models on the axis</span></div>
+      <div class="stat"><b><span data-count="63">0</span></b><span>Providers &amp; clouds</span></div>
+      <div class="stat"><b><span data-count="99.99">0</span>%</b><span>Routing uptime</span></div>
+    </div>
+  </section>
+
+  <!-- ============ unified API ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow">01 · Unified API</div>
+      <div class="axis-rule"></div>
+      <div class="grid-2" style="gap:48px; align-items:center">
+        <div>
+          <h2 style="font-size:32px; letter-spacing:-0.5px; margin-bottom:16px">One request.<br>Every model.</h2>
+          <p style="color:var(--ink-70); margin-bottom:22px">Point your existing OpenAI SDK at <code class="mono" style="background:var(--cobalt-wash); color:var(--cobalt-deep); padding:2px 8px; font-size:12.5px">api.modelaxis.ai</code> and change nothing else. Swap between GPT-5, Claude, Gemini, DeepSeek, or any of 400+ models by changing one string.</p>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:12px">
+            <li style="display:flex; gap:12px; align-items:baseline"><span class="status-dot on"></span><span><b style="font-weight:600">OpenAI-compatible.</b> <span style="color:var(--ink-70)">Keep your SDK, tools, and streaming code.</span></span></li>
+            <li style="display:flex; gap:12px; align-items:baseline"><span class="status-dot routing"></span><span><b style="font-weight:600">Intelligent routing.</b> <span style="color:var(--ink-70)">Use <code class="mono" style="font-size:12px">modelaxis/auto</code> and we pick the best price-performance model per request.</span></span></li>
+            <li style="display:flex; gap:12px; align-items:baseline"><span class="status-dot on"></span><span><b style="font-weight:600">Automatic failover.</b> <span style="color:var(--ink-70)">A provider outage reroutes mid-stream — your users never see it.</span></span></li>
+          </ul>
+          <p style="margin-top:24px"><a class="text-link" href="{{ROOT}}docs/">Read the docs</a></p>
+        </div>
+        <div class="code-card">
+          <div class="code-tabs" role="tablist">
+            <button role="tab" aria-selected="true">Python</button>
+            <button role="tab" aria-selected="false">JavaScript</button>
+            <button role="tab" aria-selected="false">curl</button>
+          </div>
+          <div class="code-body">
+            <button class="code-copy" type="button">COPY</button>
+<pre><code><span class="tok-k">from</span> openai <span class="tok-k">import</span> OpenAI
+
+client = OpenAI(
+    base_url=<span class="tok-s">"https://api.modelaxis.ai/v1"</span>,
+    api_key=<span class="tok-s">"mx-sk-…"</span>,
+)
+
+reply = client.chat.completions.create(
+    model=<span class="tok-s">"anthropic/claude-sonnet-4.5"</span>,
+    messages=[{<span class="tok-s">"role"</span>: <span class="tok-s">"user"</span>,
+               <span class="tok-s">"content"</span>: <span class="tok-s">"Hello, axis"</span>}],
+)</code></pre>
+<pre hidden><code><span class="tok-k">import</span> OpenAI <span class="tok-k">from</span> <span class="tok-s">"openai"</span>;
+
+<span class="tok-k">const</span> client = <span class="tok-k">new</span> OpenAI({
+  baseURL: <span class="tok-s">"https://api.modelaxis.ai/v1"</span>,
+  apiKey: <span class="tok-s">"mx-sk-…"</span>,
+});
+
+<span class="tok-k">const</span> reply = <span class="tok-k">await</span> client.chat.completions.create({
+  model: <span class="tok-s">"anthropic/claude-sonnet-4.5"</span>,
+  messages: [{ role: <span class="tok-s">"user"</span>, content: <span class="tok-s">"Hello, axis"</span> }],
+});</code></pre>
+<pre hidden><code>curl https://api.modelaxis.ai/v1/chat/completions \
+  -H <span class="tok-s">"Authorization: Bearer mx-sk-…"</span> \
+  -H <span class="tok-s">"Content-Type: application/json"</span> \
+  -d <span class="tok-s">'{
+    "model": "anthropic/claude-sonnet-4.5",
+    "messages": [{"role": "user", "content": "Hello, axis"}]
+  }'</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ price advantage ============ -->
+  <section class="section" style="background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="eyebrow">02 · Wholesale pricing</div>
+      <div class="axis-rule"></div>
+      <div class="grid-2" style="gap:48px; align-items:start">
+        <div>
+          <h2 style="font-size:32px; letter-spacing:-0.5px; margin-bottom:16px">Pay less than list.<br>Never more.</h2>
+          <p style="color:var(--ink-70); margin-bottom:18px">We negotiate volume commitments across providers and pass the savings through. Every model is priced at or below the provider's own list price — with no platform fee, no seat licenses, and no markup on top.</p>
+          <p style="color:var(--ink-70)">Blended $/1M tokens shown at a typical 3:1 input-output mix. Live prices on every <a href="{{ROOT}}models/">model page</a>.</p>
+          <p style="margin-top:22px"><a class="text-link" href="{{ROOT}}pricing/">How pricing works</a></p>
+        </div>
+        <div id="compare-rows"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ features ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow">03 · Why one axis</div>
+      <div class="axis-rule"></div>
+      <div class="grid-3">
+        <div class="feature">
+          <div class="glyph" aria-hidden="true"><i style="height:40%"></i><i style="height:70%"></i><i style="height:100%; background:var(--cobalt)"></i><i style="height:70%"></i><i style="height:40%"></i></div>
+          <h3>Intelligent routing</h3>
+          <p>Route by price, latency, or quality. <code class="mono" style="font-size:11.5px">modelaxis/auto</code> benchmarks continuously and sends each request to the current best endpoint.</p>
+        </div>
+        <div class="feature">
+          <div class="glyph" aria-hidden="true"><i style="height:100%; background:var(--cobalt)"></i><i style="height:100%; background:var(--bar-neutral)"></i><i style="height:100%; background:var(--aurora)"></i><i style="height:100%; background:var(--bar-neutral)"></i><i style="height:100%; background:var(--bar-neutral)"></i></div>
+          <h3>Automatic failover</h3>
+          <p>Every model has fallback endpoints across providers and regions. Outages and rate limits reroute in milliseconds without dropping the stream.</p>
+        </div>
+        <div class="feature">
+          <div class="glyph" aria-hidden="true"><i style="height:30%"></i><i style="height:45%"></i><i style="height:60%"></i><i style="height:80%"></i><i style="height:100%; background:var(--aurora)"></i></div>
+          <h3>Global edge</h3>
+          <p>Ingress points in the Americas, Europe, and Asia-Pacific keep time-to-first-token low wherever your users are.</p>
+        </div>
+        <div class="feature">
+          <div class="glyph" aria-hidden="true"><i style="height:100%"></i><i style="height:100%; background:var(--cobalt)"></i><i style="height:100%"></i><i style="height:100%"></i><i style="height:100%"></i></div>
+          <h3>Your keys, your rules</h3>
+          <p>Bring your own provider keys when you have committed spend, and set per-key budgets, rate limits, and model allowlists.</p>
+        </div>
+        <div class="feature">
+          <div class="glyph" aria-hidden="true"><i style="height:55%"></i><i style="height:85%"></i><i style="height:40%"></i><i style="height:100%; background:var(--cobalt)"></i><i style="height:65%"></i></div>
+          <h3>Unified observability</h3>
+          <p>One dashboard for spend, latency, and error rates across every provider — per key, per model, per team, exportable.</p>
+        </div>
+        <div class="feature">
+          <div class="glyph" aria-hidden="true"><i style="height:100%; background:var(--aurora)"></i><i style="height:100%; background:var(--aurora)"></i><i style="height:100%; background:var(--aurora)"></i><i style="height:100%; background:var(--aurora)"></i><i style="height:100%"></i></div>
+          <h3>Data privacy controls</h3>
+          <p>Choose zero-retention routing, exclude providers by region or policy, and get one DPA that covers the entire axis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ featured models ============ -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">04 · On the axis this week</div>
+      <div class="axis-rule"></div>
+      <div class="grid-4" id="featured-models"></div>
+      <p style="margin-top:24px"><a class="text-link" href="{{ROOT}}models/">All 400+ models</a></p>
+    </div>
+  </section>
+
+  <!-- ============ providers ============ -->
+  <section class="section-tight" style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="provider-strip" aria-label="Providers on the axis">
+        <span>OpenAI</span><span>Anthropic</span><span>Google</span><span>Meta</span><span>DeepSeek</span><span>Qwen</span><span>Mistral</span><span>xAI</span><span>Moonshot</span><span>Z.ai</span><span>MiniMax</span><span>Cohere</span><span>Amazon</span><span>NVIDIA</span><span>+ 49 more</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta-band">
+    <div class="wrap">
+      <div>
+        <h2>Start calling in five minutes.</h2>
+        <p>Create a key, point your SDK at the axis, ship. Free credits included.</p>
+      </div>
+      <div style="display:flex; gap:14px; flex-wrap:wrap">
+        <a class="btn btn-white btn-lg" href="{{ROOT}}docs/#quickstart">Get API key</a>
+        <a class="btn btn-lg" style="border-color:#fff; color:#fff" href="{{ROOT}}chat/">Try the playground</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!--#footer -->
+<script src="{{ROOT}}assets/js/models-data.js"></script>
+<script src="{{ROOT}}assets/js/home.js" defer></script>
+</body>
+</html>

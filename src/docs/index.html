@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--#head title="Documentation — ModelAxis" desc="Quickstart, authentication, chat completions, streaming, routing, and error reference for the ModelAxis API. OpenAI-compatible, live in five minutes." path="docs/" -->
+</head>
+<body>
+<!--#nav active="docs" -->
+
+<main id="main">
+  <div class="wrap">
+    <div class="page-head">
+      <div class="eyebrow">Documentation</div>
+      <h1>Build on the axis</h1>
+      <p class="lede">The ModelAxis API is a drop-in replacement for the OpenAI API. If your code speaks OpenAI, it already speaks ModelAxis.</p>
+    </div>
+
+    <div class="docs-layout">
+      <nav class="docs-nav" aria-label="Docs sections">
+        <a href="#quickstart">Quickstart</a>
+        <a href="#auth">Authentication</a>
+        <a href="#api">Chat completions</a>
+        <a href="#streaming">Streaming</a>
+        <a href="#routing">Models &amp; routing</a>
+        <a href="#errors">Errors</a>
+        <a href="#limits">Rate limits</a>
+        <a href="#sdks">SDKs</a>
+      </nav>
+
+      <div class="docs-body">
+        <h2 id="quickstart">Quickstart</h2>
+        <p>Three steps from zero to first completion:</p>
+        <ul>
+          <li><b>1.</b> Create an account at <code>modelaxis.ai</code> and generate a key in the console. Keys look like <code>mx-sk-…</code>.</li>
+          <li><b>2.</b> Point your OpenAI SDK at <code>https://api.modelaxis.ai/v1</code>.</li>
+          <li><b>3.</b> Pick any model id from the <a href="../models/">catalog</a> — that's it.</li>
+        </ul>
+        <div class="code-card">
+          <div class="code-tabs" role="tablist">
+            <button role="tab" aria-selected="true">Python</button>
+            <button role="tab" aria-selected="false">JavaScript</button>
+            <button role="tab" aria-selected="false">curl</button>
+          </div>
+          <div class="code-body">
+            <button class="code-copy" type="button">COPY</button>
+<pre><code><span class="tok-c"># pip install openai</span>
+<span class="tok-k">from</span> openai <span class="tok-k">import</span> OpenAI
+
+client = OpenAI(
+    base_url=<span class="tok-s">"https://api.modelaxis.ai/v1"</span>,
+    api_key=<span class="tok-s">"mx-sk-…"</span>,
+)
+
+reply = client.chat.completions.create(
+    model=<span class="tok-s">"modelaxis/auto"</span>,  <span class="tok-c"># or any model id</span>
+    messages=[{<span class="tok-s">"role"</span>: <span class="tok-s">"user"</span>, <span class="tok-s">"content"</span>: <span class="tok-s">"Hello, axis"</span>}],
+)
+<span class="tok-k">print</span>(reply.choices[0].message.content)</code></pre>
+<pre hidden><code><span class="tok-c">// npm install openai</span>
+<span class="tok-k">import</span> OpenAI <span class="tok-k">from</span> <span class="tok-s">"openai"</span>;
+
+<span class="tok-k">const</span> client = <span class="tok-k">new</span> OpenAI({
+  baseURL: <span class="tok-s">"https://api.modelaxis.ai/v1"</span>,
+  apiKey: process.env.MODELAXIS_API_KEY,
+});
+
+<span class="tok-k">const</span> reply = <span class="tok-k">await</span> client.chat.completions.create({
+  model: <span class="tok-s">"modelaxis/auto"</span>,
+  messages: [{ role: <span class="tok-s">"user"</span>, content: <span class="tok-s">"Hello, axis"</span> }],
+});
+console.log(reply.choices[0].message.content);</code></pre>
+<pre hidden><code>curl https://api.modelaxis.ai/v1/chat/completions \
+  -H <span class="tok-s">"Authorization: Bearer $MODELAXIS_API_KEY"</span> \
+  -H <span class="tok-s">"Content-Type: application/json"</span> \
+  -d <span class="tok-s">'{
+    "model": "modelaxis/auto",
+    "messages": [{"role": "user", "content": "Hello, axis"}]
+  }'</span></code></pre>
+          </div>
+        </div>
+
+        <h2 id="auth">Authentication</h2>
+        <p>Pass your key as a bearer token on every request. Keys are scoped: each key can carry its own model allowlist, spend budget, and rate limit, configured in the console.</p>
+        <div class="code-card"><div class="code-body">
+          <button class="code-copy" type="button">COPY</button>
+          <pre><code>Authorization: Bearer mx-sk-…</code></pre>
+        </div></div>
+        <p>Never ship a key in client-side code. For browser apps, proxy requests through your backend or issue short-lived scoped keys from the console API.</p>
+
+        <h2 id="api">Chat completions</h2>
+        <p><code>POST /v1/chat/completions</code> accepts the standard OpenAI request body, plus optional ModelAxis routing extensions:</p>
+        <div class="card" style="overflow-x:auto">
+          <table class="table">
+            <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td class="mono" style="font-size:12px">model</td><td class="mono" style="font-size:12px">string</td><td style="color:var(--ink-70)">Any catalog id, e.g. <code>openai/gpt-5</code>, or <code>modelaxis/auto</code></td></tr>
+              <tr><td class="mono" style="font-size:12px">messages</td><td class="mono" style="font-size:12px">array</td><td style="color:var(--ink-70)">OpenAI message format, including tool and image parts</td></tr>
+              <tr><td class="mono" style="font-size:12px">stream</td><td class="mono" style="font-size:12px">boolean</td><td style="color:var(--ink-70)">Server-sent events, OpenAI chunk format</td></tr>
+              <tr><td class="mono" style="font-size:12px">tools</td><td class="mono" style="font-size:12px">array</td><td style="color:var(--ink-70)">Function calling, passed through to models that support it</td></tr>
+              <tr><td class="mono" style="font-size:12px">route</td><td class="mono" style="font-size:12px">object</td><td style="color:var(--ink-70)">ModelAxis extension — see <a href="#routing">routing</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Responses match the OpenAI schema exactly, with one addition: <code>modelaxis.endpoint</code> in the response metadata tells you which provider endpoint actually served the request, and at what price.</p>
+
+        <h2 id="streaming">Streaming</h2>
+        <p>Set <code>stream: true</code> to receive server-sent events. Chunks use the OpenAI delta format, so existing streaming parsers work unchanged. If a provider fails mid-stream, the axis re-issues the request to a fallback endpoint and resumes from the last complete token — your stream sees a brief pause, not an error.</p>
+
+        <h2 id="routing">Models &amp; routing</h2>
+        <p>Model ids are namespaced as <code>provider/model</code>. Three routing modes:</p>
+        <ul>
+          <li><b>Pinned</b> — <code>"model": "anthropic/claude-sonnet-4.5"</code>: always this model, cheapest healthy endpoint.</li>
+          <li><b>Auto</b> — <code>"model": "modelaxis/auto"</code>: we pick the best price-performance model for the request's size and complexity.</li>
+          <li><b>Fallback chain</b> — pass <code>route.fallbacks</code> and the axis walks the chain on any failure or rate limit.</li>
+        </ul>
+        <div class="code-card"><div class="code-body">
+          <button class="code-copy" type="button">COPY</button>
+<pre><code>{
+  <span class="tok-s">"model"</span>: <span class="tok-s">"deepseek/deepseek-v3.2"</span>,
+  <span class="tok-s">"route"</span>: {
+    <span class="tok-s">"fallbacks"</span>: [<span class="tok-s">"qwen/qwen3-235b-a22b"</span>, <span class="tok-s">"meta-llama/llama-4-maverick"</span>],
+    <span class="tok-s">"sort"</span>: <span class="tok-s">"latency"</span>,          <span class="tok-c">// or "price" (default)</span>
+    <span class="tok-s">"data_policy"</span>: <span class="tok-s">"zero-retention"</span> <span class="tok-c">// restrict to matching providers</span>
+  },
+  <span class="tok-s">"messages"</span>: […]
+}</code></pre>
+        </div></div>
+        <p>List every available model and its live prices with <code>GET /v1/models</code>.</p>
+
+        <h2 id="errors">Errors</h2>
+        <p>Errors follow the OpenAI error envelope. Because of failover, most provider-side errors never reach you — these are the ones that can:</p>
+        <div class="card" style="overflow-x:auto">
+          <table class="table">
+            <thead><tr><th class="num">Status</th><th>Code</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td class="num">400</td><td class="mono" style="font-size:12px">invalid_request</td><td style="color:var(--ink-70)">Malformed body, or a parameter the target model doesn't support</td></tr>
+              <tr><td class="num">401</td><td class="mono" style="font-size:12px">invalid_api_key</td><td style="color:var(--ink-70)">Missing or revoked key</td></tr>
+              <tr><td class="num">402</td><td class="mono" style="font-size:12px">insufficient_credits</td><td style="color:var(--ink-70)">Balance or budget exhausted — top up or raise the key's budget</td></tr>
+              <tr><td class="num">403</td><td class="mono" style="font-size:12px">model_not_allowed</td><td style="color:var(--ink-70)">Model outside this key's allowlist or data policy</td></tr>
+              <tr><td class="num">429</td><td class="mono" style="font-size:12px">rate_limited</td><td style="color:var(--ink-70)">Key-level limit hit; axis-level limits are handled by failover</td></tr>
+              <tr><td class="num">502</td><td class="mono" style="font-size:12px">all_endpoints_down</td><td style="color:var(--ink-70)">Every endpoint for the model (and fallbacks) is unavailable — rare</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="limits">Rate limits</h2>
+        <p>Default limits are per key and scale with your account tier: <b class="mono" style="font-size:13px">600 RPM</b> to start, rising automatically with sustained usage. Provider-side rate limits are absorbed by the axis — we spread your traffic across endpoints so a single provider's limit doesn't cap your throughput.</p>
+
+        <h2 id="sdks">SDKs</h2>
+        <p>Any OpenAI-compatible SDK works today: the official <code>openai</code> packages for Python and JavaScript, LangChain, LlamaIndex, Vercel AI SDK, LiteLLM, and most agent frameworks — just override the base URL. Native <code>modelaxis</code> packages with typed routing extensions are in beta.</p>
+        <div class="notice" style="margin-top:20px">
+          Questions or a missing integration? Email <a href="mailto:support@modelaxis.ai">support@modelaxis.ai</a> — an engineer answers within one business day.
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!--#footer -->
+<script>
+  // Scrollspy for the docs sidebar.
+  (function () {
+    const links = [...document.querySelectorAll('.docs-nav a')];
+    const heads = links.map(a => document.querySelector(a.hash));
+    const spy = new IntersectionObserver(() => {
+      let current = heads[0];
+      for (const head of heads) if (head.getBoundingClientRect().top < 120) current = head;
+      links.forEach(a => a.classList.toggle('active', a.hash === '#' + current.id));
+    }, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+    heads.forEach(h => spy.observe(h));
+  })();
+</script>
+</body>
+</html>

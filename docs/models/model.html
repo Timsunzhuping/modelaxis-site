@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model — ModelAxis</title>
+<meta name="description" content="Model pricing, context window, latency, and endpoints on ModelAxis.">
+<link rel="canonical" href="https://www.modelaxis.ai/models/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ModelAxis">
+<meta property="og:title" content="Model — ModelAxis">
+<meta property="og:description" content="Model pricing, context window, latency, and endpoints on ModelAxis.">
+<meta property="og:url" content="https://www.modelaxis.ai/models/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500&family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@300;400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="top">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../" aria-label="ModelAxis home">
+      <svg width="20" height="20" viewBox="0 0 110 110" aria-hidden="true">
+        <rect x="23" y="22.8" width="8" height="64.4" fill="#10131C"/>
+        <rect x="40" y="12.2" width="8" height="85.7" fill="#10131C"/>
+        <rect x="57" y="0"    width="8" height="110"  fill="#3355FF"/>
+        <rect x="74" y="12.2" width="8" height="85.7" fill="#10131C"/>
+        <rect x="91" y="22.8" width="8" height="64.4" fill="#10131C"/>
+      </svg>
+      <span class="nav-wordmark">modelaxis</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="../models/" data-nav="models">Models</a>
+      <a href="../chat/" data-nav="chat">Chat</a>
+      <a href="../rankings/" data-nav="rankings">Rankings</a>
+      <a href="../docs/" data-nav="docs">Docs</a>
+      <a href="../pricing/" data-nav="pricing">Pricing</a>
+      <a href="../status/" data-nav="status">Status</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="nav-search" type="button" data-search-trigger aria-label="Search models">
+        <span>Search models…</span><kbd>⌘K</kbd>
+      </button>
+      <a class="btn btn-primary nav-cta" href="../docs/#quickstart">Get API key</a>
+      <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" data-burger>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile" hidden data-mobile-menu>
+    <a href="../models/">Models</a>
+    <a href="../chat/">Chat</a>
+    <a href="../rankings/">Rankings</a>
+    <a href="../docs/">Docs</a>
+    <a href="../pricing/">Pricing</a>
+    <a href="../status/">Status</a>
+    <a class="btn btn-primary" href="../docs/#quickstart">Get API key</a>
+  </div>
+</header>
+<script>document.currentScript.previousElementSibling.dataset.active="models";</script>
+
+
+<main id="main">
+  <div class="wrap">
+    <div class="page-head" id="model-head" style="padding-bottom:24px">
+      <div class="eyebrow"><a href="./" style="color:inherit">Models</a> / <span id="crumb" class="mono"></span></div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap">
+        <div>
+          <h1 id="m-name" style="margin-bottom:6px">…</h1>
+          <div id="m-badges" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap"></div>
+        </div>
+        <div style="display:flex; gap:12px; padding-top:8px">
+          <a class="btn btn-primary" id="m-try" href="../chat/">Try in playground</a>
+          <a class="btn btn-secondary" href="../docs/#quickstart">Get API key</a>
+        </div>
+      </div>
+      <p class="lede" id="m-desc" style="margin-top:14px"></p>
+    </div>
+
+    <div class="section-tight" style="padding-top:8px">
+      <dl class="kv" id="m-kv" style="grid-template-columns:repeat(4,1fr)"></dl>
+
+      <div style="margin-top:40px">
+        <div class="eyebrow">Endpoints · routed by price and health</div>
+        <div class="axis-rule"></div>
+        <div class="card" style="overflow-x:auto">
+          <table class="table" id="ep-table">
+            <thead><tr>
+              <th>Endpoint</th><th>Region</th>
+              <th class="num">Input $/1M</th><th class="num">Output $/1M</th>
+              <th class="num">TTFT</th><th class="num">Throughput</th><th class="num">Uptime 90d</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p style="font-size:12.5px; color:var(--ink-40); margin-top:10px">Requests go to the healthiest lowest-price endpoint by default. Pin a specific endpoint with the <code class="mono" style="font-size:11.5px">provider</code> routing option.</p>
+      </div>
+
+      <div class="grid-2" style="gap:48px; margin-top:48px; align-items:start">
+        <div>
+          <div class="eyebrow">Call this model</div>
+          <div class="axis-rule"></div>
+          <div class="code-card">
+            <div class="code-tabs" role="tablist">
+              <button role="tab" aria-selected="true">Python</button>
+              <button role="tab" aria-selected="false">curl</button>
+            </div>
+            <div class="code-body">
+              <button class="code-copy" type="button">COPY</button>
+              <pre id="code-python"><code></code></pre>
+              <pre id="code-curl" hidden><code></code></pre>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow">Related models</div>
+          <div class="axis-rule"></div>
+          <div id="related" style="display:flex; flex-direction:column; gap:12px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <svg width="34" height="34" viewBox="0 0 110 110" aria-hidden="true">
+          <rect x="13" y="36.7" width="4" height="36.6" fill="#F5F6F9"/>
+          <rect x="23" y="22.8" width="4" height="64.4" fill="#F5F6F9"/>
+          <rect x="33" y="15.8" width="4" height="78.4" fill="#F5F6F9"/>
+          <rect x="43" y="12.2" width="4" height="85.7" fill="#F5F6F9"/>
+          <rect x="53" y="0"    width="4" height="110"  fill="#3355FF"/>
+          <rect x="63" y="12.2" width="4" height="85.7" fill="#F5F6F9"/>
+          <rect x="73" y="15.8" width="4" height="78.4" fill="#F5F6F9"/>
+          <rect x="83" y="22.8" width="4" height="64.4" fill="#F5F6F9"/>
+          <rect x="93" y="36.7" width="4" height="36.6" fill="#F5F6F9"/>
+        </svg>
+        <div>
+          <div class="footer-wordmark">modelaxis</div>
+          <div class="footer-domain">MODELAXIS.AI</div>
+        </div>
+      </div>
+      <p class="footer-tagline">One axis for global intelligence.<span lang="zh-Hans">一根轴，对齐全球智能。</span></p>
+      <div class="footer-status">
+        <a class="badge badge-online" href="../status/"><span class="dot"></span>ALL SYSTEMS NORMAL</a>
+      </div>
+    </div>
+    <nav class="footer-col" aria-label="Platform">
+      <h3>Platform</h3>
+      <a href="../models/">Models</a>
+      <a href="../chat/">Chat playground</a>
+      <a href="../rankings/">Rankings</a>
+      <a href="../status/">Status</a>
+    </nav>
+    <nav class="footer-col" aria-label="Developers">
+      <h3>Developers</h3>
+      <a href="../docs/">Documentation</a>
+      <a href="../docs/#quickstart">Quickstart</a>
+      <a href="../docs/#api">API reference</a>
+      <a href="../docs/#errors">Error codes</a>
+    </nav>
+    <nav class="footer-col" aria-label="Company">
+      <h3>Company</h3>
+      <a href="../pricing/">Pricing</a>
+      <a href="../pricing/#enterprise">Enterprise</a>
+      <a href="../legal/terms.html">Terms</a>
+      <a href="../legal/privacy.html">Privacy</a>
+    </nav>
+  </div>
+  <div class="footer-base">
+    <span>© 2026 ModelAxis. All rights reserved.</span>
+    <span class="footer-mono">BARCODE GLOBE · COBALT × AURORA</span>
+  </div>
+</footer>
+<script src="../assets/js/site.js" defer></script>
+
+<script src="../assets/js/models-data.js"></script>
+<script src="../assets/js/model-page.js" defer></script>
+</body>
+</html>

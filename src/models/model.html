@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--#head title="Model — ModelAxis" desc="Model pricing, context window, latency, and endpoints on ModelAxis." path="models/" -->
+</head>
+<body>
+<!--#nav active="models" -->
+
+<main id="main">
+  <div class="wrap">
+    <div class="page-head" id="model-head" style="padding-bottom:24px">
+      <div class="eyebrow"><a href="./" style="color:inherit">Models</a> / <span id="crumb" class="mono"></span></div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap">
+        <div>
+          <h1 id="m-name" style="margin-bottom:6px">…</h1>
+          <div id="m-badges" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap"></div>
+        </div>
+        <div style="display:flex; gap:12px; padding-top:8px">
+          <a class="btn btn-primary" id="m-try" href="{{ROOT}}chat/">Try in playground</a>
+          <a class="btn btn-secondary" href="{{ROOT}}docs/#quickstart">Get API key</a>
+        </div>
+      </div>
+      <p class="lede" id="m-desc" style="margin-top:14px"></p>
+    </div>
+
+    <div class="section-tight" style="padding-top:8px">
+      <dl class="kv" id="m-kv" style="grid-template-columns:repeat(4,1fr)"></dl>
+
+      <div style="margin-top:40px">
+        <div class="eyebrow">Endpoints · routed by price and health</div>
+        <div class="axis-rule"></div>
+        <div class="card" style="overflow-x:auto">
+          <table class="table" id="ep-table">
+            <thead><tr>
+              <th>Endpoint</th><th>Region</th>
+              <th class="num">Input $/1M</th><th class="num">Output $/1M</th>
+              <th class="num">TTFT</th><th class="num">Throughput</th><th class="num">Uptime 90d</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p style="font-size:12.5px; color:var(--ink-40); margin-top:10px">Requests go to the healthiest lowest-price endpoint by default. Pin a specific endpoint with the <code class="mono" style="font-size:11.5px">provider</code> routing option.</p>
+      </div>
+
+      <div class="grid-2" style="gap:48px; margin-top:48px; align-items:start">
+        <div>
+          <div class="eyebrow">Call this model</div>
+          <div class="axis-rule"></div>
+          <div class="code-card">
+            <div class="code-tabs" role="tablist">
+              <button role="tab" aria-selected="true">Python</button>
+              <button role="tab" aria-selected="false">curl</button>
+            </div>
+            <div class="code-body">
+              <button class="code-copy" type="button">COPY</button>
+              <pre id="code-python"><code></code></pre>
+              <pre id="code-curl" hidden><code></code></pre>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow">Related models</div>
+          <div class="axis-rule"></div>
+          <div id="related" style="display:flex; flex-direction:column; gap:12px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!--#footer -->
+<script src="{{ROOT}}assets/js/models-data.js"></script>
+<script src="{{ROOT}}assets/js/model-page.js" defer></script>
+</body>
+</html>

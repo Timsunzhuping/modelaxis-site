@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--#head title="Chat — ModelAxis" desc="Try any model on the axis in the browser. Compare prices, latency, and behavior before you route production traffic." path="chat/" -->
+</head>
+<body>
+<!--#nav active="chat" -->
+
+<main id="main">
+  <div class="chat-layout">
+    <aside class="chat-side">
+      <div class="fld">
+        <label for="chat-model">Model</label>
+        <select class="input" id="chat-model"></select>
+      </div>
+      <div class="fld" id="chat-modelmeta" style="font-family:var(--font-mono); font-size:10.5px; color:var(--ink-70); line-height:2"></div>
+      <div class="fld">
+        <label for="chat-system">System prompt</label>
+        <textarea class="input" id="chat-system" rows="3" placeholder="You are a helpful assistant."></textarea>
+      </div>
+      <div class="fld">
+        <label for="chat-temp">Temperature · <span id="temp-val" class="mono">0.7</span></label>
+        <input type="range" id="chat-temp" min="0" max="2" step="0.1" value="0.7" style="width:100%; accent-color:var(--cobalt)">
+      </div>
+      <div class="notice" style="font-size:12px">
+        <b class="mono" style="font-size:10px; letter-spacing:1px">DEMO MODE</b><br>
+        Responses on this page are simulated locally so you can feel the interface. Add an API key in the console for live inference.
+      </div>
+    </aside>
+
+    <section class="chat-main" aria-label="Chat">
+      <div class="chat-log" id="chat-log">
+        <div class="chat-empty" id="chat-empty">
+          <div class="bars bars-anim" aria-hidden="true">
+            <i style="height:34%"></i><i style="height:56%"></i><i style="height:78%"></i><i style="height:100%" class="b-cobalt"></i><i style="height:78%"></i><i style="height:56%"></i><i style="height:34%"></i>
+          </div>
+          <p style="font-family:var(--font-display); font-weight:300; font-size:22px; color:var(--ink)">Ask anything, to any model.</p>
+          <p style="font-size:13px; margin-top:6px">Pick a model on the left, or keep <span class="mono" style="font-size:12px">modelaxis/auto</span>.</p>
+        </div>
+      </div>
+      <form class="chat-input-row" id="chat-form">
+        <textarea class="input" id="chat-input" placeholder="Send a message… (Enter to send, Shift+Enter for a new line)" aria-label="Message"></textarea>
+        <button class="btn btn-primary" type="submit" style="align-self:stretch">Send</button>
+      </form>
+    </section>
+  </div>
+</main>
+
+<script src="{{ROOT}}assets/js/site.js" defer></script>
+<script src="{{ROOT}}assets/js/models-data.js"></script>
+<script src="{{ROOT}}assets/js/chat.js" defer></script>
+</body>
+</html>

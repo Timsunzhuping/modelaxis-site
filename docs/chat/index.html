@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat — ModelAxis</title>
+<meta name="description" content="Try any model on the axis in the browser. Compare prices, latency, and behavior before you route production traffic.">
+<link rel="canonical" href="https://www.modelaxis.ai/chat/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ModelAxis">
+<meta property="og:title" content="Chat — ModelAxis">
+<meta property="og:description" content="Try any model on the axis in the browser. Compare prices, latency, and behavior before you route production traffic.">
+<meta property="og:url" content="https://www.modelaxis.ai/chat/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500&family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@300;400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="top">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../" aria-label="ModelAxis home">
+      <svg width="20" height="20" viewBox="0 0 110 110" aria-hidden="true">
+        <rect x="23" y="22.8" width="8" height="64.4" fill="#10131C"/>
+        <rect x="40" y="12.2" width="8" height="85.7" fill="#10131C"/>
+        <rect x="57" y="0"    width="8" height="110"  fill="#3355FF"/>
+        <rect x="74" y="12.2" width="8" height="85.7" fill="#10131C"/>
+        <rect x="91" y="22.8" width="8" height="64.4" fill="#10131C"/>
+      </svg>
+      <span class="nav-wordmark">modelaxis</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="../models/" data-nav="models">Models</a>
+      <a href="../chat/" data-nav="chat">Chat</a>
+      <a href="../rankings/" data-nav="rankings">Rankings</a>
+      <a href="../docs/" data-nav="docs">Docs</a>
+      <a href="../pricing/" data-nav="pricing">Pricing</a>
+      <a href="../status/" data-nav="status">Status</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="nav-search" type="button" data-search-trigger aria-label="Search models">
+        <span>Search models…</span><kbd>⌘K</kbd>
+      </button>
+      <a class="btn btn-primary nav-cta" href="../docs/#quickstart">Get API key</a>
+      <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" data-burger>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile" hidden data-mobile-menu>
+    <a href="../models/">Models</a>
+    <a href="../chat/">Chat</a>
+    <a href="../rankings/">Rankings</a>
+    <a href="../docs/">Docs</a>
+    <a href="../pricing/">Pricing</a>
+    <a href="../status/">Status</a>
+    <a class="btn btn-primary" href="../docs/#quickstart">Get API key</a>
+  </div>
+</header>
+<script>document.currentScript.previousElementSibling.dataset.active="chat";</script>
+
+
+<main id="main">
+  <div class="chat-layout">
+    <aside class="chat-side">
+      <div class="fld">
+        <label for="chat-model">Model</label>
+        <select class="input" id="chat-model"></select>
+      </div>
+      <div class="fld" id="chat-modelmeta" style="font-family:var(--font-mono); font-size:10.5px; color:var(--ink-70); line-height:2"></div>
+      <div class="fld">
+        <label for="chat-system">System prompt</label>
+        <textarea class="input" id="chat-system" rows="3" placeholder="You are a helpful assistant."></textarea>
+      </div>
+      <div class="fld">
+        <label for="chat-temp">Temperature · <span id="temp-val" class="mono">0.7</span></label>
+        <input type="range" id="chat-temp" min="0" max="2" step="0.1" value="0.7" style="width:100%; accent-color:var(--cobalt)">
+      </div>
+      <div class="notice" style="font-size:12px">
+        <b class="mono" style="font-size:10px; letter-spacing:1px">DEMO MODE</b><br>
+        Responses on this page are simulated locally so you can feel the interface. Add an API key in the console for live inference.
+      </div>
+    </aside>
+
+    <section class="chat-main" aria-label="Chat">
+      <div class="chat-log" id="chat-log">
+        <div class="chat-empty" id="chat-empty">
+          <div class="bars bars-anim" aria-hidden="true">
+            <i style="height:34%"></i><i style="height:56%"></i><i style="height:78%"></i><i style="height:100%" class="b-cobalt"></i><i style="height:78%"></i><i style="height:56%"></i><i style="height:34%"></i>
+          </div>
+          <p style="font-family:var(--font-display); font-weight:300; font-size:22px; color:var(--ink)">Ask anything, to any model.</p>
+          <p style="font-size:13px; margin-top:6px">Pick a model on the left, or keep <span class="mono" style="font-size:12px">modelaxis/auto</span>.</p>
+        </div>
+      </div>
+      <form class="chat-input-row" id="chat-form">
+        <textarea class="input" id="chat-input" placeholder="Send a message… (Enter to send, Shift+Enter for a new line)" aria-label="Message"></textarea>
+        <button class="btn btn-primary" type="submit" style="align-self:stretch">Send</button>
+      </form>
+    </section>
+  </div>
+</main>
+
+<script src="../assets/js/site.js" defer></script>
+<script src="../assets/js/models-data.js"></script>
+<script src="../assets/js/chat.js" defer></script>
+</body>
+</html>
