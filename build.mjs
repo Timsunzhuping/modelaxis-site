@@ -56,4 +56,4 @@ for (const file of walk(SRC)) {
 }
 
 cpSync(ASSETS, join(DIST, 'assets'), { recursive: true });
-console.log(`built ${pages} pages -> dist/`);
+console.log(`built ${pages} pages -> ${relative(process.cwd(), DIST) || '.'}/`);
