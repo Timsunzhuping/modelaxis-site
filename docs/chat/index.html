@@ -45,7 +45,7 @@
       <button class="nav-search" type="button" data-search-trigger aria-label="Search models">
         <span>Search models…</span><kbd>⌘K</kbd>
       </button>
-      <a class="btn btn-primary nav-cta" href="../docs/#quickstart">Get API key</a>
+      <a class="btn btn-primary nav-cta" href="../console/">Get API key</a>
       <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" data-burger>
         <span></span><span></span><span></span>
       </button>
@@ -58,7 +58,7 @@
     <a href="../docs/">Docs</a>
     <a href="../pricing/">Pricing</a>
     <a href="../status/">Status</a>
-    <a class="btn btn-primary" href="../docs/#quickstart">Get API key</a>
+    <a class="btn btn-primary" href="../console/">Get API key</a>
   </div>
 </header>
 <script>document.currentScript.previousElementSibling.dataset.active="chat";</script>
@@ -80,9 +80,13 @@
         <label for="chat-temp">Temperature · <span id="temp-val" class="mono">0.7</span></label>
         <input type="range" id="chat-temp" min="0" max="2" step="0.1" value="0.7" style="width:100%; accent-color:var(--cobalt)">
       </div>
-      <div class="notice" style="font-size:12px">
+      <div class="fld">
+        <label for="chat-key">API key <span id="chat-mode-badge" class="badge" style="margin-left:6px; font-size:8.5px; padding:1px 6px">DEMO</span></label>
+        <input class="input" id="chat-key" type="password" placeholder="mx-sk-… (optional)" autocomplete="off">
+      </div>
+      <div class="notice" style="font-size:12px" id="chat-mode-note">
         <b class="mono" style="font-size:10px; letter-spacing:1px">DEMO MODE</b><br>
-        Responses on this page are simulated locally so you can feel the interface. Add an API key in the console for live inference.
+        Without a key, responses are simulated locally. Paste an API key from the <a href="../console/">console</a> to route this chat through the live platform.
       </div>
     </aside>
 

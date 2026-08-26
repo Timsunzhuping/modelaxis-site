@@ -1,6 +1,10 @@
-// Chat playground — demo mode. Responses are simulated locally and labeled as such.
+// Chat playground. Demo mode simulates locally; paste an mx-sk key to route
+// the conversation through the live platform API (same origin or MX_API_BASE).
 (function () {
   const M = window.MX_MODELS, F = window.MX_FMT;
+  const API_BASE = (localStorage.getItem('MX_API_BASE') || '').replace(/\/$/, '');
+  const $key = document.getElementById('chat-key');
+  const $modeBadge = document.getElementById('chat-mode-badge');
   const $model = document.getElementById('chat-model');
   const $meta = document.getElementById('chat-modelmeta');
   const $log = document.getElementById('chat-log');
@@ -57,6 +61,77 @@
       'Create an API key to run it for real — the request body you would send is identical.';
   }
 
+  // live-mode plumbing
+  if ($key) {
+    $key.value = sessionStorage.getItem('MX_CHAT_KEY') || '';
+    const syncMode = () => {
+      const live = /^mx-sk-/.test($key.value.trim());
+      $modeBadge.textContent = live ? 'LIVE' : 'DEMO';
+      $modeBadge.className = 'badge' + (live ? ' badge-online' : '');
+      sessionStorage.setItem('MX_CHAT_KEY', $key.value.trim());
+    };
+    $key.addEventListener('input', syncMode);
+    syncMode();
+  }
+  const liveKey = () => {
+    const v = ($key?.value || '').trim();
+    return /^mx-sk-/.test(v) ? v : null;
+  };
+  const history = [];
+
+  async function liveReply(text, holder, m) {
+    const body = {
+      model: m ? m.id : 'modelaxis/auto',
+      stream: true,
+      temperature: +$temp.value,
+      messages: [
+        ...(document.getElementById('chat-system').value.trim()
+          ? [{ role: 'system', content: document.getElementById('chat-system').value.trim() }] : []),
+        ...history,
+        { role: 'user', content: text },
+      ],
+    };
+    const res = await fetch((API_BASE || '') + '/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + liveKey() },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error?.message || 'API error ' + res.status);
+    }
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    const span = document.createElement('span');
+    holder.innerHTML = '';
+    holder.appendChild(span);
+    let buf = '', content = '', meta = null;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      let idx;
+      while ((idx = buf.indexOf('\n\n')) >= 0) {
+        const line = buf.slice(0, idx).trim();
+        buf = buf.slice(idx + 2);
+        if (!line.startsWith('data:')) continue;
+        const data = line.slice(5).trim();
+        if (data === '[DONE]') continue;
+        let json; try { json = JSON.parse(data); } catch { continue; }
+        if (json.modelaxis) meta = { ...json.modelaxis, model: json.model, usage: json.usage };
+        const delta = json.choices?.[0]?.delta?.content;
+        if (delta) { content += delta; span.textContent = content; $log.scrollTop = $log.scrollHeight; }
+      }
+    }
+    const metaDiv = document.createElement('div');
+    metaDiv.className = 'meta mono';
+    metaDiv.textContent = meta
+      ? `${meta.model} · LIVE · ${meta.endpoint} · ${meta.usage?.total_tokens ?? '?'} TOK · $${(meta.cost_usd ?? 0).toFixed(6)}`
+      : (m ? m.id : 'modelaxis/auto') + ' · LIVE';
+    holder.appendChild(metaDiv);
+    history.push({ role: 'user', content: text }, { role: 'assistant', content });
+  }
+
   let busy = false;
   $form.addEventListener('submit', e => {
     e.preventDefault();
@@ -68,6 +143,13 @@
     addMsg('user', escapeHtml(text));
 
     const m = currentModel();
+    if (liveKey()) {
+      const holder = addMsg('assistant', '<span class="loader-bars" aria-label="Thinking"><i></i><i></i><i></i><i></i><i></i></span>');
+      liveReply(text, holder, m)
+        .catch(err => { holder.innerHTML = '<span style="color:var(--alert)">' + escapeHtml(err.message) + '</span>'; })
+        .finally(() => { busy = false; });
+      return;
+    }
     const holder = addMsg('assistant', '<span class="loader-bars" aria-label="Thinking"><i></i><i></i><i></i><i></i><i></i></span>');
     const full = demoReply(text, m);
     const latency = m ? m.latency : 160;

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--#head title="Console — ModelAxis" desc="Sign in to the ModelAxis console: API keys, usage, and billing." path="console/" -->
+</head>
+<body>
+
+<main id="main" style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px">
+  <div style="width:400px; max-width:100%">
+    <div style="display:flex; align-items:center; gap:10px; justify-content:center; margin-bottom:28px">
+      <svg width="26" height="26" viewBox="0 0 110 110" aria-hidden="true">
+        <rect x="23" y="22.8" width="8" height="64.4" fill="#10131C"/>
+        <rect x="40" y="12.2" width="8" height="85.7" fill="#10131C"/>
+        <rect x="57" y="0" width="8" height="110" fill="#3355FF"/>
+        <rect x="74" y="12.2" width="8" height="85.7" fill="#10131C"/>
+        <rect x="91" y="22.8" width="8" height="64.4" fill="#10131C"/>
+      </svg>
+      <span style="font-family:var(--font-display); font-size:22px">modelaxis <span style="color:var(--ink-40); font-weight:300">console</span></span>
+    </div>
+
+    <div class="card card-pad">
+      <div style="display:flex; gap:0; border:1px solid var(--line); margin-bottom:20px">
+        <button class="chip" id="tab-login" aria-pressed="true" style="flex:1; border:0; justify-content:center">Sign in</button>
+        <button class="chip" id="tab-signup" aria-pressed="false" style="flex:1; border:0; border-left:1px solid var(--line); justify-content:center">Create account</button>
+      </div>
+      <form id="auth-form" style="display:flex; flex-direction:column; gap:12px">
+        <div>
+          <label class="eyebrow" style="margin-bottom:6px; display:block" for="email">Email</label>
+          <input class="input" id="email" type="email" autocomplete="email" required>
+        </div>
+        <div>
+          <label class="eyebrow" style="margin-bottom:6px; display:block" for="password">Password</label>
+          <input class="input" id="password" type="password" autocomplete="current-password" minlength="8" required>
+        </div>
+        <div id="auth-error" style="color:var(--alert); font-size:12.5px; min-height:18px" role="alert"></div>
+        <button class="btn btn-primary btn-lg" id="auth-submit" type="submit">Sign in</button>
+      </form>
+      <p id="signup-note" style="font-size:12px; color:var(--ink-40); margin-top:14px" hidden>
+        New accounts start with free credits — no card required.
+      </p>
+    </div>
+
+    <p style="text-align:center; margin-top:18px; font-size:12.5px">
+      <a href="{{ROOT}}">← modelaxis.ai</a>
+      <span style="color:var(--line)"> · </span>
+      <a href="#" id="api-settings-link">API server</a>
+    </p>
+    <div id="api-settings" class="card card-pad" style="margin-top:10px" hidden>
+      <label class="eyebrow" style="display:block; margin-bottom:6px" for="api-base">Platform API base URL</label>
+      <input class="input" id="api-base" placeholder="same origin (default)">
+      <p style="font-size:11.5px; color:var(--ink-40); margin-top:8px">Leave empty when the console is served by the platform itself. Point it at your deployment (e.g. <code class="mono" style="font-size:10.5px">https://api.modelaxis.ai</code>) when hosted statically.</p>
+    </div>
+  </div>
+</main>
+
+<script src="{{ROOT}}assets/js/console-auth.js" defer></script>
+</body>
+</html>

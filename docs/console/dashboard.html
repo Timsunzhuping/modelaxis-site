@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard — ModelAxis Console</title>
+<meta name="description" content="API keys, usage, and billing for your ModelAxis account.">
+<link rel="canonical" href="https://www.modelaxis.ai/console/dashboard.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ModelAxis">
+<meta property="og:title" content="Dashboard — ModelAxis Console">
+<meta property="og:description" content="API keys, usage, and billing for your ModelAxis account.">
+<meta property="og:url" content="https://www.modelaxis.ai/console/dashboard.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500&family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@300;400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../">
+      <svg width="20" height="20" viewBox="0 0 110 110" aria-hidden="true">
+        <rect x="23" y="22.8" width="8" height="64.4" fill="#10131C"/>
+        <rect x="40" y="12.2" width="8" height="85.7" fill="#10131C"/>
+        <rect x="57" y="0" width="8" height="110" fill="#3355FF"/>
+        <rect x="74" y="12.2" width="8" height="85.7" fill="#10131C"/>
+        <rect x="91" y="22.8" width="8" height="64.4" fill="#10131C"/>
+      </svg>
+      <span class="nav-wordmark">modelaxis <span style="color:var(--ink-40); font-weight:300">console</span></span>
+    </a>
+    <div class="nav-actions">
+      <span class="badge" id="mode-badge" hidden>MOCK ROUTING</span>
+      <span class="mono" id="who" style="font-size:11.5px; color:var(--ink-70)"></span>
+      <button class="btn btn-secondary" id="logout" style="padding:7px 16px; font-size:12.5px">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap" style="padding-top:36px; padding-bottom:64px">
+
+  <!-- overview -->
+  <dl class="kv" style="grid-template-columns:repeat(4,1fr)">
+    <div><dt>Balance</dt><dd id="ov-balance">…</dd></div>
+    <div><dt>Requests · 30d</dt><dd id="ov-requests">…</dd></div>
+    <div><dt>Tokens · 30d</dt><dd id="ov-tokens">…</dd></div>
+    <div><dt>Spend · 30d</dt><dd id="ov-spend">…</dd></div>
+  </dl>
+
+  <!-- topup -->
+  <div class="card card-pad" style="margin-top:16px; display:flex; gap:14px; align-items:center; flex-wrap:wrap">
+    <span class="eyebrow" style="margin:0">Add credits</span>
+    <input class="input" id="topup-amount" type="number" min="1" max="10000" value="25" style="width:120px">
+    <button class="btn btn-primary" id="topup-btn">Top up</button>
+    <span id="topup-note" style="font-size:12px; color:var(--ink-40)"></span>
+  </div>
+
+  <!-- usage -->
+  <section style="margin-top:44px">
+    <div class="eyebrow">Usage · last 30 days</div>
+    <div class="axis-rule"></div>
+    <div class="card card-pad">
+      <div class="bars" id="usage-bars" style="height:120px; align-items:flex-end"></div>
+      <div style="display:flex; justify-content:space-between; margin-top:8px" class="mono">
+        <span style="font-size:9.5px; color:var(--ink-40)" id="usage-from"></span>
+        <span style="font-size:9.5px; color:var(--ink-40)">DAILY SPEND · USD</span>
+        <span style="font-size:9.5px; color:var(--ink-40)" id="usage-to"></span>
+      </div>
+      <div id="usage-models" style="margin-top:20px; display:flex; flex-direction:column; gap:8px"></div>
+    </div>
+  </section>
+
+  <!-- api keys -->
+  <section style="margin-top:44px">
+    <div class="eyebrow">API keys</div>
+    <div class="axis-rule"></div>
+    <div class="card card-pad" style="margin-bottom:14px">
+      <form id="key-form" style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1.2fr auto; gap:10px; align-items:end">
+        <div><label class="eyebrow" style="display:block; margin-bottom:5px" for="key-name">Name</label>
+          <input class="input" id="key-name" placeholder="production" required></div>
+        <div><label class="eyebrow" style="display:block; margin-bottom:5px" for="key-budget">Budget $ (optional)</label>
+          <input class="input" id="key-budget" type="number" min="0" step="0.01" placeholder="none"></div>
+        <div><label class="eyebrow" style="display:block; margin-bottom:5px" for="key-rpm">RPM</label>
+          <input class="input" id="key-rpm" type="number" min="1" max="10000" value="600"></div>
+        <div><label class="eyebrow" style="display:block; margin-bottom:5px" for="key-policy">Data policy</label>
+          <select class="input" id="key-policy">
+            <option value="standard">Standard</option>
+            <option value="zero-retention">Zero retention</option>
+          </select></div>
+        <button class="btn btn-primary" type="submit">Create key</button>
+      </form>
+      <label style="display:inline-flex; gap:8px; align-items:center; margin-top:12px; font-size:12.5px; color:var(--ink-70)">
+        <input type="checkbox" id="key-logging" style="accent-color:var(--cobalt)"> Log prompt/completion content for debugging (off = metadata only)
+      </label>
+      <div class="notice" id="new-key-box" style="margin-top:12px" hidden>
+        <b style="font-weight:600">Copy this key now — it is shown only once.</b>
+        <div style="display:flex; gap:10px; margin-top:8px; align-items:center">
+          <code class="mono" id="new-key" style="font-size:12px; word-break:break-all"></code>
+          <button class="btn btn-secondary" id="copy-key" style="padding:5px 12px; font-size:11px">Copy</button>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="overflow-x:auto">
+      <table class="table" id="keys-table">
+        <thead><tr><th>Name</th><th>Key</th><th class="num">Spent</th><th class="num">Budget</th><th class="num">RPM</th><th>Policy</th><th>Created</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- requests -->
+  <section style="margin-top:44px">
+    <div class="eyebrow">Recent requests</div>
+    <div class="axis-rule"></div>
+    <div class="card" style="overflow-x:auto">
+      <table class="table" id="req-table">
+        <thead><tr><th>Time</th><th>Model</th><th>Endpoint</th><th class="num">In</th><th class="num">Out</th><th class="num">Cost</th><th class="num">Latency</th><th class="num">Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- byok -->
+  <section style="margin-top:44px">
+    <div class="eyebrow">Bring your own keys</div>
+    <div class="axis-rule"></div>
+    <div class="card card-pad">
+      <p style="font-size:13px; color:var(--ink-70); margin-bottom:14px">Attach provider keys you already pay for. Traffic on your keys is billed at a flat 3% routing fee and keeps your negotiated rates. Keys are encrypted at rest.</p>
+      <form id="byok-form" style="display:flex; gap:10px; flex-wrap:wrap">
+        <select class="input" id="byok-provider" style="width:170px">
+          <option value="openai">OpenAI</option><option value="anthropic">Anthropic</option>
+          <option value="google">Google</option><option value="deepseek">DeepSeek</option>
+          <option value="xai">xAI</option><option value="moonshot">Moonshot</option><option value="mistral">Mistral</option>
+        </select>
+        <input class="input" id="byok-key" style="flex:1; min-width:220px" placeholder="provider API key" required>
+        <button class="btn btn-secondary" type="submit">Save key</button>
+      </form>
+      <div id="byok-list" style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap"></div>
+    </div>
+  </section>
+
+  <!-- quickstart -->
+  <section style="margin-top:44px">
+    <div class="eyebrow">Call the API</div>
+    <div class="axis-rule"></div>
+    <div class="code-card"><div class="code-body">
+      <button class="code-copy" type="button">COPY</button>
+      <pre id="qs-code"><code></code></pre>
+    </div></div>
+  </section>
+
+</main>
+
+<script src="../assets/js/site.js" defer></script>
+<script src="../assets/js/console.js" defer></script>
+</body>
+</html>
